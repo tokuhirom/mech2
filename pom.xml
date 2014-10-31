@@ -4,6 +4,7 @@
 
 
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>me.geso</groupId>
 	<artifactId>mech2</artifactId>
 	<name>mech2</name>
 	<description>mech2</description>
