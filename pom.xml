@@ -16,6 +16,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
+    <scm>
+      <url>https://github.com/tokuhirom/mech2/</url>
+      <connection>scm:git:git://github.com/tokuhirom/mech2.git</connection>
+      <developerConnection>scm:git:git@github.com:tokuhirom/mech2.git</developerConnection>
+  </scm>
+
 	<developers>
 		<developer>
 			<id>tokuhirom</id>
