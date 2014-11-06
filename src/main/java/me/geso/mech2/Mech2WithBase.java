@@ -7,6 +7,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public class Mech2WithBase {
 	private final Mech2 mech2;
 	private final URI baseURI;
@@ -54,6 +56,15 @@ public class Mech2WithBase {
 		URIBuilder uriBuilder = new URIBuilder(this.baseURI)
 			.setPath(path);
 		return new Mech2Request(this.getMech2(), uriBuilder, new HttpPost());
+	}
+
+	public Mech2Request postJSON(String path, Object data)
+			throws URISyntaxException, JsonProcessingException {
+		URIBuilder uriBuilder = new URIBuilder(this.baseURI)
+			.setPath(path);
+		Mech2Request mech2Request = new Mech2Request(this.getMech2(), uriBuilder, new HttpPost());
+		mech2Request.setBodyJSON(data);
+		return mech2Request;
 	}
 
 }

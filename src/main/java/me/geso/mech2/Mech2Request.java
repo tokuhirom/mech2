@@ -54,6 +54,7 @@ public class Mech2Request {
 
 	public Mech2Request setBodyJSON(Object form) throws JsonProcessingException {
 		byte[] body = this.mech2.getObjectMapper().writeValueAsBytes(form);
+		this.request.setHeader("Content-Type", "application/json; charset=utf-8");
 		this.setBody(new ByteArrayEntity(body));
 		return this;
 	}
