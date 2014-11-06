@@ -39,6 +39,16 @@ public class Mech2 {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpPost());
 	}
 
+	/**
+	 * Disable redirect handling.
+	 *
+	 * @return
+	 */
+	public Mech2 disableRedirectHandling() {
+		this.httpClientBuilder.disableRedirectHandling();
+		return this;
+	}
+
 	public <T> Mech2Result request(HttpUriRequest request) throws IOException {
 		long startedOn = System.currentTimeMillis();
 		try (CloseableHttpClient client = this.httpClientBuilder.build()) {

@@ -39,6 +39,16 @@ public class Mech2WithBase {
 			uriBuilder, new HttpGet());
 	}
 
+	/**
+	 * Disable redirect handling.
+	 *
+	 * @return
+	 */
+	public Mech2WithBase disableRedirectHandling() {
+		this.mech2.disableRedirectHandling();
+		return this;
+	}
+
 	public Mech2Request post(String path)
 			throws URISyntaxException {
 		URIBuilder uriBuilder = new URIBuilder(this.baseURI)
