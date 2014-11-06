@@ -20,6 +20,12 @@
 
 mech2 is a HTTP client library like Faraday.
 
+## FAQ
+
+### How do I disable redirect handling?
+
+You can call `Mech2#disableRedirectHandling()` or `Mech2WithBase#disableRedirectHandling()`.
+
 ## AUTHORS
 
 Tokuhiro Matsuno, tokuhirom@gmail.com
