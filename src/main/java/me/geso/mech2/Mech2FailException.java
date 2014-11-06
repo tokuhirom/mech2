@@ -3,7 +3,7 @@ package me.geso.mech2;
 import lombok.ToString;
 
 /**
- * Exception class for {@link Mech2Result.orDie} method.
+ * Exception class for {@link Mech2Result#orDie()} method.
  */
 @ToString
 public class Mech2FailException extends Exception {

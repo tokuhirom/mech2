@@ -85,7 +85,7 @@ public class Mech2Result {
 	 * Convert the result to Mech2JSONResult object. It contains this object and
 	 * JSON type information.
 	 * 
-	 * @param valueType
+	 * @param klass
 	 * @return
 	 */
 	public <T> Mech2JSONResult<T> toJSONResult(TypeReference<T> klass) {
