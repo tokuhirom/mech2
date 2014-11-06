@@ -15,7 +15,6 @@ import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * HTTP request result.
@@ -26,10 +25,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Mech2Result {
 	private final HttpRequest request;
 	private final HttpResponse response;
+	private final Mech2 mech2;
 
-	public Mech2Result(HttpRequest request, HttpResponse response) {
+	Mech2Result(HttpRequest request, HttpResponse response, Mech2 mech2) {
 		this.request = request;
 		this.response = response;
+		this.mech2 = mech2;
 		try {
 			byte[] body = EntityUtils.toByteArray(response.getEntity());
 			ByteArrayEntity entity = new ByteArrayEntity(body);
@@ -62,12 +63,12 @@ public class Mech2Result {
 
 	public <T> T parseJSON(TypeReference<T> valueType)
 			throws JsonParseException, JsonMappingException, IOException {
-		return new ObjectMapper().readValue(this.getResponse().getEntity().getContent(), valueType);
+		return this.mech2.getObjectMapper().readValue(this.getResponse().getEntity().getContent(), valueType);
 	}
 
 	public <T> T parseJSON(Class<T> valueType) throws JsonParseException,
 			JsonMappingException, IOException {
-		return new ObjectMapper().readValue(this.getResponse().getEntity().getContent(), valueType);
+		return this.mech2.getObjectMapper().readValue(this.getResponse().getEntity().getContent(), valueType);
 	}
 
 	/**

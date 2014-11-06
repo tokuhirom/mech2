@@ -46,7 +46,7 @@ public class Mech2 {
 				logger.info("{}: {}, {} secs", request.getURI(),
 					resp.getStatusLine().toString(),
 					(System.currentTimeMillis() - startedOn) / 1000.0);
-				return new Mech2Result(request, resp);
+				return new Mech2Result(request, resp, this);
 			}
 		}
 	}
