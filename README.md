@@ -1,4 +1,5 @@
 # mech2
+[![Build Status](https://travis-ci.org/tokuhirom/mech2.svg)](https://travis-ci.org/tokuhirom/mech2)
 
 ## SYNOPSIS
 
