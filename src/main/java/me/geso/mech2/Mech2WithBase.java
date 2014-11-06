@@ -2,6 +2,8 @@ package me.geso.mech2;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -65,6 +67,17 @@ public class Mech2WithBase {
 		Mech2Request mech2Request = new Mech2Request(this.getMech2(), uriBuilder, new HttpPost());
 		mech2Request.setBodyJSON(data);
 		return mech2Request;
+	}
+
+	public Mech2RequestMultipart postMultipart(String path) {
+		return this.postMultipart(path, StandardCharsets.UTF_8);
+	}
+
+	public Mech2RequestMultipart postMultipart(String path, Charset charset) {
+		URIBuilder uriBuilder = new URIBuilder(this.baseURI)
+			.setPath(path);
+		HttpPost httpPost = new HttpPost();
+		return new Mech2RequestMultipart(this.getMech2(), uriBuilder, httpPost, charset);
 	}
 
 }
