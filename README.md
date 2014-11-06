@@ -20,6 +20,12 @@
 
 mech2 is a HTTP client library like Faraday.
 
+## javadoc
+
+You can see the javadoc on javadoc.io
+
+http://www.javadoc.io/doc/me.geso/mech2/
+
 ## FAQ
 
 ### How do I disable redirect handling?

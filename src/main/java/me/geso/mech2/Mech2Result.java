@@ -17,7 +17,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 /**
- * HTTP request result.
+ * HTTP request result.<br>
+ * <p>
+ * It contains HttpRequest object and HttpResponse object.
  *
  * @author tokuhirom
  *
@@ -40,35 +42,84 @@ public class Mech2Result {
 		}
 	}
 
+	/**
+	 * Get HttpRequest object.
+	 * 
+	 * @return
+	 */
 	public HttpRequest getRequest() {
 		return this.request;
 	}
 
+	/**
+	 * Get HttpResponse object.
+	 * 
+	 * @return
+	 */
 	public HttpResponse getResponse() {
 		return this.response;
 	}
 
+	/**
+	 * Returns true if the HttResponse has 2xx status code. False otherwise.
+	 * 
+	 * @return
+	 */
 	public boolean isSuccess() {
 		int statusCode = this.response.getStatusLine().getStatusCode();
 		return 200 <= statusCode && statusCode < 300;
 	}
 
+	/**
+	 * Convert the result to Mech2JSONResult object. It contains this object and
+	 * JSON type information.
+	 * 
+	 * @param valueType
+	 * @return
+	 */
 	public <T> Mech2JSONResult<T> toJSONResult(Class<T> valueType) {
 		return Mech2JSONResult.of(this, valueType);
 	}
 
+	/**
+	 * Convert the result to Mech2JSONResult object. It contains this object and
+	 * JSON type information.
+	 * 
+	 * @param valueType
+	 * @return
+	 */
 	public <T> Mech2JSONResult<T> toJSONResult(TypeReference<T> klass) {
 		return Mech2JSONResult.of(this, klass);
 	}
 
+	/**
+	 * Parse JSON from content-body using jackson.
+	 * 
+	 * @param valueType
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
 	public <T> T parseJSON(TypeReference<T> valueType)
 			throws JsonParseException, JsonMappingException, IOException {
-		return this.mech2.getObjectMapper().readValue(this.getResponse().getEntity().getContent(), valueType);
+		return this.mech2.getObjectMapper().readValue(
+				this.getResponse().getEntity().getContent(), valueType);
 	}
 
+	/**
+	 * Parse JSON from content-body using jackson.
+	 * 
+	 * @param valueType
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
 	public <T> T parseJSON(Class<T> valueType) throws JsonParseException,
 			JsonMappingException, IOException {
-		return this.mech2.getObjectMapper().readValue(this.getResponse().getEntity().getContent(), valueType);
+		return this.mech2.getObjectMapper().readValue(
+				this.getResponse().getEntity().getContent(), valueType);
 	}
 
 	/**
@@ -84,9 +135,18 @@ public class Mech2Result {
 		}
 	}
 
+	/**
+	 * Get the HTTP response as String.
+	 * 
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public String getResponseBodyAsString() throws ParseException, IOException {
-		ContentType contentType = ContentType.getOrDefault(this.response.getEntity());
-		Charset charset = contentType.getCharset() == null ? StandardCharsets.ISO_8859_1 : contentType.getCharset();
+		ContentType contentType = ContentType.getOrDefault(this.response
+				.getEntity());
+		Charset charset = contentType.getCharset() == null ? StandardCharsets.ISO_8859_1
+				: contentType.getCharset();
 		return EntityUtils.toString(this.response.getEntity(), charset);
 	}
 }
