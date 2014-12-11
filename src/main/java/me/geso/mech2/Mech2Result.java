@@ -5,6 +5,7 @@ import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -148,5 +149,25 @@ public class Mech2Result {
 		Charset charset = contentType.getCharset() == null ? StandardCharsets.ISO_8859_1
 				: contentType.getCharset();
 		return EntityUtils.toString(this.response.getEntity(), charset);
+	}
+
+	/**
+	 * Shorthand for {@code mech.getResponse().getStatusLine().getStatusCode()}
+	 * 
+	 * @return
+	 */
+	public int getStatusCode() {
+		return this.getResponse().getStatusLine().getStatusCode();
+	}
+
+	/**
+	 * Get ContentType object from the response.
+	 * 
+	 * @return
+	 */
+	public ContentType getContentType() {
+		Header header = this.getResponse()
+				.getFirstHeader("Content-Type");
+		return ContentType.parse(header != null ? header.getValue() : "");
 	}
 }
