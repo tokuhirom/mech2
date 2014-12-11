@@ -32,7 +32,8 @@ public class Mech2ResultTest {
 		}, (baseURL) -> {
 			Mech2 mech2 = Mech2.builder().build();
 			Mech2Result res = mech2.get(baseURL).execute();
-			assertThat(res.getContentType().getCharset(), is("UTF-8"));
+					assertThat(res.getContentType().getCharset().displayName(),
+							is("UTF-8"));
 			assertThat(res.getContentType().getMimeType(), is("text/html"));
 		});
 	}
