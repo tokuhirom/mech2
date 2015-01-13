@@ -64,6 +64,20 @@ public class Mech2Test {
 		});
 	}
 
+	@Test
+	public void testHead() throws Exception {
+		JettyServletTester.runServlet((req, resp) -> {
+			assertThat(req.getMethod(), is("HEAD"));
+			resp.setHeader("X-Oreore", "oreore");
+		}, (baseURL) -> {
+			Mech2 mech2 = Mech2.builder().build();
+			Mech2Result res = mech2.head(baseURL).execute();
+			assertThat(res.getResponse().getStatusLine().getStatusCode(), is(200));
+			assertThat(res.getResponse().getHeaders("x-Oreore")[0].getValue(), is("oreore"));
+			assertEquals("Response body should me empty", res.getResponse().getEntity(), null);
+		});
+	}
+
 	@Data
 	public static class Foo {
 		private String foo;

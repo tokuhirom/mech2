@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
@@ -62,6 +63,16 @@ public class Mech2 {
 	 */
 	public Mech2Request post(URI uri) throws JsonProcessingException {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpPost());
+	}
+
+	/**
+	 * Create new HEAD request object.
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public Mech2Request head(URI uri) {
+		return new Mech2Request(this, new URIBuilder(uri), new HttpHead());
 	}
 
 	/**
