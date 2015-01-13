@@ -6,6 +6,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import lombok.ToString;
+
 /**
  * This class contains {@link Mech2Result} and JSON type information.
  *
@@ -21,7 +23,7 @@ public abstract class Mech2JSONResult<T> {
 
 	/**
 	 * Create new instance. But you shouldn't call this directly.
-	 * 
+	 *
 	 * @param result
 	 * @param klass
 	 * @return
@@ -33,7 +35,7 @@ public abstract class Mech2JSONResult<T> {
 
 	/**
 	 * Create new instance. But you shouldn't call this directly.
-	 * 
+	 *
 	 * @param result
 	 * @param klass
 	 * @return
@@ -45,7 +47,7 @@ public abstract class Mech2JSONResult<T> {
 
 	/**
 	 * Get Mech2Result instance.
-	 * 
+	 *
 	 * @return
 	 */
 	public Mech2Result getResult() {
@@ -54,7 +56,7 @@ public abstract class Mech2JSONResult<T> {
 
 	/**
 	 * Throw exception if the response doens't contains 2XX.
-	 * 
+	 *
 	 * @return
 	 * @throws Mech2FailException
 	 */
@@ -72,7 +74,7 @@ public abstract class Mech2JSONResult<T> {
 
 	/**
 	 * Parse JSON as object.
-	 * 
+	 *
 	 * @return
 	 * @throws JsonParseException
 	 * @throws JsonMappingException
@@ -82,6 +84,7 @@ public abstract class Mech2JSONResult<T> {
 			JsonMappingException,
 			IOException;
 
+	@ToString
 	public static class Mech2JSONResultClass<T> extends
 			Mech2JSONResult<T> {
 
@@ -101,6 +104,7 @@ public abstract class Mech2JSONResult<T> {
 
 	}
 
+	@ToString
 	public static class Mech2JSONResultTypeReference<T> extends
 			Mech2JSONResult<T> {
 
