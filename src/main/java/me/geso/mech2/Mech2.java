@@ -10,6 +10,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -63,6 +64,16 @@ public class Mech2 {
 	 */
 	public Mech2Request post(URI uri) throws JsonProcessingException {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpPost());
+	}
+
+	/**
+	 * Create new PUT request object.
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public Mech2Request put(URI uri) throws JsonProcessingException {
+		return new Mech2Request(this, new URIBuilder(uri), new HttpPut());
 	}
 
 	/**
