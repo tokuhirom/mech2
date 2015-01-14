@@ -52,6 +52,17 @@ public class Mech2ResultTest {
 	}
 
 	@Test
+	public void isJSONResponseShouldReturnTrueWithCaseInsensitive() throws IOException, URISyntaxException, Exception {
+		JettyServletTester.runServlet((req, resp) -> {
+			resp.setContentType("Application/Json; charset=utf-8");
+		}, (baseURL) -> {
+			Mech2 mech2 = Mech2.builder().build();
+			Mech2Result res = mech2.get(baseURL).execute();
+			assertTrue(res.isJSONResponse());
+		});
+	}
+
+	@Test
 	public void isJSONResponseShouldReturnFalseIfContentTypeIsntJSON() throws URISyntaxException, IOException,
 			Exception {
 		JettyServletTester.runServlet((req, resp) -> {

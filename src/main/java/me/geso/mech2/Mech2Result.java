@@ -90,7 +90,7 @@ public class Mech2Result {
 		}
 
 		String responseMime = ContentType.parse(contentTypeHeader.getValue()).getMimeType();
-		return ContentType.APPLICATION_JSON.getMimeType().equals(responseMime);
+		return ContentType.APPLICATION_JSON.getMimeType().equalsIgnoreCase(responseMime);
 	}
 
 	/**
