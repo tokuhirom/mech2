@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
@@ -74,6 +75,16 @@ public class Mech2 {
 	 */
 	public Mech2Request put(URI uri) throws JsonProcessingException {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpPut());
+	}
+
+	/**
+	 * Create new DELETE request object.
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public Mech2Request delete(URI uri) {
+		return new Mech2Request(this, new URIBuilder(uri), new HttpDelete());
 	}
 
 	/**
