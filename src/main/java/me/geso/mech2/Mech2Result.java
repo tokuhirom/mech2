@@ -112,7 +112,7 @@ public class Mech2Result {
 	public <T> T parseJSON(TypeReference<T> valueType)
 			throws JsonParseException, JsonMappingException, IOException {
 		return this.mech2.getObjectMapper().readValue(
-				this.getResponse().getEntity().getContent(), valueType);
+			this.getResponse().getEntity().getContent(), valueType);
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class Mech2Result {
 	public <T> T parseJSON(Class<T> valueType) throws JsonParseException,
 			JsonMappingException, IOException {
 		return this.mech2.getObjectMapper().readValue(
-				this.getResponse().getEntity().getContent(), valueType);
+			this.getResponse().getEntity().getContent(), valueType);
 	}
 
 	/**
@@ -152,9 +152,9 @@ public class Mech2Result {
 	 */
 	public String getResponseBodyAsString() throws ParseException, IOException {
 		ContentType contentType = ContentType.getOrDefault(this.response
-				.getEntity());
+			.getEntity());
 		Charset charset = contentType.getCharset() == null ? StandardCharsets.ISO_8859_1
-				: contentType.getCharset();
+			: contentType.getCharset();
 		return EntityUtils.toString(this.response.getEntity(), charset);
 	}
 
@@ -174,7 +174,7 @@ public class Mech2Result {
 	 */
 	public ContentType getContentType() {
 		Header header = this.getResponse()
-				.getFirstHeader("Content-Type");
+			.getFirstHeader("Content-Type");
 		return ContentType.parse(header != null ? header.getValue() : "");
 	}
 }

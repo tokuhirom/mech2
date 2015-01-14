@@ -119,8 +119,8 @@ public class Mech2 {
 		try (CloseableHttpClient client = this.httpClientBuilder.build()) {
 			try (CloseableHttpResponse resp = client.execute(request)) {
 				logger.info("{}: {}, {} secs", request.getURI(),
-						resp.getStatusLine().toString(),
-						(System.currentTimeMillis() - startedOn) / 1000.0);
+					resp.getStatusLine().toString(),
+					(System.currentTimeMillis() - startedOn) / 1000.0);
 				return new Mech2Result(request, resp, this);
 			}
 		}
@@ -160,12 +160,12 @@ public class Mech2 {
 		private Builder() {
 			this.objectMapper = new ObjectMapper();
 			this.objectMapper.configure(
-					DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		}
 
 		@Setter
 		private HttpClientBuilder httpClientBuilder = HttpClientBuilder
-				.create();
+			.create();
 
 		@Setter
 		private ObjectMapper objectMapper;
