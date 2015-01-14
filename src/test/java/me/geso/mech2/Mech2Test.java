@@ -117,6 +117,18 @@ public class Mech2Test {
 		});
 	}
 
+	@Test
+	public void testDelete() throws Exception {
+		JettyServletTester.runServlet((req, resp) -> {
+			assertThat(req.getMethod(), is("DELETE"));
+			resp.getWriter().print("HOGE");
+		}, (baseURL) -> {
+			Mech2 mech2 = Mech2.builder().build();
+			Mech2Result res = mech2.delete(baseURL).execute();
+			assertThat(res.getResponse().getStatusLine().getStatusCode(), is(200));
+		});
+	}
+
 	@Data
 	public static class Foo {
 		private String foo;
