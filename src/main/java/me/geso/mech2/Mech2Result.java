@@ -79,6 +79,21 @@ public class Mech2Result {
 	}
 
 	/**
+	 * Returns true if Content-Type of response is "application/json". Otherwise, returns false.
+	 * 
+	 * @return
+	 */
+	public boolean isJSONResponse() {
+		Header contentTypeHeader = response.getFirstHeader("Content-Type");
+		if (contentTypeHeader == null) {
+			return false;
+		}
+
+		String responseMime = ContentType.parse(contentTypeHeader.getValue()).getMimeType();
+		return ContentType.APPLICATION_JSON.getMimeType().equals(responseMime);
+	}
+
+	/**
 	 * Convert the result to Mech2JSONResult object. It contains this object and
 	 * JSON type information.
 	 * 
