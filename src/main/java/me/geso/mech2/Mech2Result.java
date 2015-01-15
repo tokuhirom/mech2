@@ -79,6 +79,21 @@ public class Mech2Result {
 	}
 
 	/**
+	 * Returns true if Content-Type of response is "application/json". Otherwise, returns false.
+	 * 
+	 * @return
+	 */
+	public boolean isJSONResponse() {
+		Header contentTypeHeader = response.getFirstHeader("Content-Type");
+		if (contentTypeHeader == null) {
+			return false;
+		}
+
+		String responseMime = ContentType.parse(contentTypeHeader.getValue()).getMimeType();
+		return ContentType.APPLICATION_JSON.getMimeType().equalsIgnoreCase(responseMime);
+	}
+
+	/**
 	 * Convert the result to Mech2JSONResult object. It contains this object and
 	 * JSON type information.
 	 * 
@@ -112,7 +127,7 @@ public class Mech2Result {
 	public <T> T parseJSON(TypeReference<T> valueType)
 			throws JsonParseException, JsonMappingException, IOException {
 		return this.mech2.getObjectMapper().readValue(
-				this.getResponse().getEntity().getContent(), valueType);
+			this.getResponse().getEntity().getContent(), valueType);
 	}
 
 	/**
@@ -127,7 +142,7 @@ public class Mech2Result {
 	public <T> T parseJSON(Class<T> valueType) throws JsonParseException,
 			JsonMappingException, IOException {
 		return this.mech2.getObjectMapper().readValue(
-				this.getResponse().getEntity().getContent(), valueType);
+			this.getResponse().getEntity().getContent(), valueType);
 	}
 
 	/**
@@ -152,9 +167,9 @@ public class Mech2Result {
 	 */
 	public String getResponseBodyAsString() throws ParseException, IOException {
 		ContentType contentType = ContentType.getOrDefault(this.response
-				.getEntity());
+			.getEntity());
 		Charset charset = contentType.getCharset() == null ? StandardCharsets.ISO_8859_1
-				: contentType.getCharset();
+			: contentType.getCharset();
 		return EntityUtils.toString(this.response.getEntity(), charset);
 	}
 
@@ -174,7 +189,7 @@ public class Mech2Result {
 	 */
 	public ContentType getContentType() {
 		Header header = this.getResponse()
-				.getFirstHeader("Content-Type");
+			.getFirstHeader("Content-Type");
 		return ContentType.parse(header != null ? header.getValue() : "");
 	}
 }

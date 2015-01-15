@@ -113,7 +113,8 @@ public class Mech2Test {
 			assertThat(req.getMethod(), is("PUT"));
 		}, (baseURL) -> {
 			Mech2 mech2 = Mech2.builder().build();
-			mech2.put(baseURL).setBodyJSON(new Object() {}).execute(); // <= malformed!
+			mech2.put(baseURL).setBodyJSON(new Object() {
+			}).execute(); // <= malformed!
 		});
 	}
 
