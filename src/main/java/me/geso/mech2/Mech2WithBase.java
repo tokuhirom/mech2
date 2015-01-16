@@ -59,7 +59,7 @@ public class Mech2WithBase {
 	 */
 	public Mech2Request get(String path) throws URISyntaxException {
 		URIBuilder uriBuilder = new URIBuilder(this.baseURI)
-				.setPath(path);
+			.setPath(path);
 		return new Mech2Request(this.getMech2(), uriBuilder, new HttpGet());
 	}
 
@@ -100,7 +100,7 @@ public class Mech2WithBase {
 	public Mech2Request post(String path)
 			throws URISyntaxException {
 		URIBuilder uriBuilder = new URIBuilder(this.baseURI)
-				.setPath(path);
+			.setPath(path);
 		return new Mech2Request(this.getMech2(), uriBuilder, new HttpPost());
 	}
 
@@ -117,9 +117,9 @@ public class Mech2WithBase {
 	public Mech2Request postJSON(String path, Object data)
 			throws URISyntaxException, JsonProcessingException {
 		URIBuilder uriBuilder = new URIBuilder(this.baseURI)
-				.setPath(path);
+			.setPath(path);
 		Mech2Request mech2Request = new Mech2Request(this.getMech2(),
-				uriBuilder, new HttpPost());
+			uriBuilder, new HttpPost());
 		mech2Request.setBodyJSON(data);
 		return mech2Request;
 	}
@@ -143,10 +143,10 @@ public class Mech2WithBase {
 	 */
 	public Mech2RequestMultipart postMultipart(String path, Charset charset) {
 		URIBuilder uriBuilder = new URIBuilder(this.baseURI)
-				.setPath(path);
+			.setPath(path);
 		HttpPost httpPost = new HttpPost();
 		return new Mech2RequestMultipart(this.getMech2(), uriBuilder, httpPost,
-				charset);
+			charset);
 	}
 
 }

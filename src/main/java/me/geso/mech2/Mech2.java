@@ -7,9 +7,11 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -66,6 +68,26 @@ public class Mech2 {
 	}
 
 	/**
+	 * Create new PUT request object.
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public Mech2Request put(URI uri) throws JsonProcessingException {
+		return new Mech2Request(this, new URIBuilder(uri), new HttpPut());
+	}
+
+	/**
+	 * Create new DELETE request object.
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public Mech2Request delete(URI uri) {
+		return new Mech2Request(this, new URIBuilder(uri), new HttpDelete());
+	}
+
+	/**
 	 * Create new HEAD request object.
 	 * 
 	 * @param uri
@@ -97,8 +119,8 @@ public class Mech2 {
 		try (CloseableHttpClient client = this.httpClientBuilder.build()) {
 			try (CloseableHttpResponse resp = client.execute(request)) {
 				logger.info("{}: {}, {} secs", request.getURI(),
-						resp.getStatusLine().toString(),
-						(System.currentTimeMillis() - startedOn) / 1000.0);
+					resp.getStatusLine().toString(),
+					(System.currentTimeMillis() - startedOn) / 1000.0);
 				return new Mech2Result(request, resp, this);
 			}
 		}
@@ -138,12 +160,12 @@ public class Mech2 {
 		private Builder() {
 			this.objectMapper = new ObjectMapper();
 			this.objectMapper.configure(
-					DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		}
 
 		@Setter
 		private HttpClientBuilder httpClientBuilder = HttpClientBuilder
-				.create();
+			.create();
 
 		@Setter
 		private ObjectMapper objectMapper;
