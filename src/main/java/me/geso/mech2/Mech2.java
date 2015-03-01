@@ -3,9 +3,6 @@ package me.geso.mech2;
 import java.io.IOException;
 import java.net.URI;
 
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -22,6 +19,9 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * Main class of the mech2 package. Yet another HTTP client library based on
@@ -47,8 +47,17 @@ public class Mech2 {
 	}
 
 	/**
+	 * Get the builder object.
+	 *
+	 * @return
+	 */
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	/**
 	 * Create new GET request object.
-	 * 
+	 *
 	 * @param uri
 	 * @return
 	 */
@@ -58,7 +67,7 @@ public class Mech2 {
 
 	/**
 	 * Create new POST request object.
-	 * 
+	 *
 	 * @param uri
 	 * @return
 	 * @throws JsonProcessingException
@@ -69,7 +78,7 @@ public class Mech2 {
 
 	/**
 	 * Create new PUT request object.
-	 * 
+	 *
 	 * @param uri
 	 * @return
 	 */
@@ -79,7 +88,7 @@ public class Mech2 {
 
 	/**
 	 * Create new DELETE request object.
-	 * 
+	 *
 	 * @param uri
 	 * @return
 	 */
@@ -89,7 +98,7 @@ public class Mech2 {
 
 	/**
 	 * Create new HEAD request object.
-	 * 
+	 *
 	 * @param uri
 	 * @return
 	 */
@@ -129,7 +138,7 @@ public class Mech2 {
 	/**
 	 * Get the current HttpClientBuilder object.<br>
 	 * You can set parameter for this object.
-	 * 
+	 *
 	 * @return
 	 */
 	public HttpClientBuilder getHttpClientBuilder() {
@@ -139,36 +148,26 @@ public class Mech2 {
 	/**
 	 * Get the jackson's ObjectMapper object.<br>
 	 * You can configure the parameters.
-	 * 
+	 *
 	 * @return
 	 */
 	public ObjectMapper getObjectMapper() {
 		return this.objectMapper;
 	}
 
-	/**
-	 * Get the builder object.
-	 * 
-	 * @return
-	 */
-	public static Builder builder() {
-		return new Builder();
-	}
-
 	@Accessors(fluent = true)
 	public static class Builder {
+		@Setter
+		private HttpClientBuilder httpClientBuilder = HttpClientBuilder
+			.create();
+		@Setter
+		private ObjectMapper objectMapper;
+
 		private Builder() {
 			this.objectMapper = new ObjectMapper();
 			this.objectMapper.configure(
 				DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		}
-
-		@Setter
-		private HttpClientBuilder httpClientBuilder = HttpClientBuilder
-			.create();
-
-		@Setter
-		private ObjectMapper objectMapper;
 
 		public Mech2 build() {
 			return new Mech2(this.httpClientBuilder, this.objectMapper);
