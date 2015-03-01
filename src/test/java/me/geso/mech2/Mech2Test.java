@@ -4,12 +4,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import java.nio.charset.StandardCharsets;
 
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.Data;
 
