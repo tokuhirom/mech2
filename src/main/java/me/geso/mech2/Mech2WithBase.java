@@ -12,7 +12,7 @@ import org.apache.http.client.utils.URIBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
- * Mech2 obejct with base URI.
+ * Mech2 object with base URI.
  * <p>
  * This class is useful when
  * <ul>
@@ -35,7 +35,7 @@ public class Mech2WithBase {
 	/**
 	 * Get a mech2 instance.
 	 * 
-	 * @return
+	 * @return mech2 instance
 	 */
 	public Mech2 getMech2() {
 		return this.mech2;
@@ -44,7 +44,7 @@ public class Mech2WithBase {
 	/**
 	 * Get base URI
 	 * 
-	 * @return
+	 * @return base URI object
 	 */
 	public URI getBaseURI() {
 		return this.baseURI;
@@ -53,8 +53,8 @@ public class Mech2WithBase {
 	/**
 	 * Create new GET request.
 	 *
-	 * @param path
-	 * @return
+	 * @param path request path
+	 * @return Generated request object.
 	 * @throws URISyntaxException
 	 */
 	public Mech2Request get(String path) throws URISyntaxException {
@@ -66,12 +66,13 @@ public class Mech2WithBase {
 	/**
 	 * Create new GET request using {@link String#format(String, Object...)}.
 	 * <p>
-	 * It's same as {@code mech.get(String.format("/member/%s", member.getId())}
+	 * It's same as
+	 * <pre><code>mech.get(String.format("/member/%s", member.getId())</code></pre>
 	 * . But readable.
 	 * 
-	 * @param pathFormat
-	 * @param args
-	 * @return
+	 * @param pathFormat path format
+	 * @param args parameters.
+	 * @return request object
 	 * @throws URISyntaxException
 	 */
 	public Mech2Request getf(String pathFormat, Object... args)
@@ -83,7 +84,7 @@ public class Mech2WithBase {
 	/**
 	 * Disable redirect handling.
 	 *
-	 * @return
+	 * @return fluent
 	 */
 	public Mech2WithBase disableRedirectHandling() {
 		this.mech2.disableRedirectHandling();
@@ -93,8 +94,8 @@ public class Mech2WithBase {
 	/**
 	 * Create new POST request.
 	 * 
-	 * @param path
-	 * @return
+	 * @param path path
+	 * @return request object
 	 * @throws URISyntaxException
 	 */
 	public Mech2Request post(String path)
@@ -107,10 +108,10 @@ public class Mech2WithBase {
 	/**
 	 * Create new POST request contains JSON.
 	 * 
-	 * @param path
+	 * @param path path to request
 	 * @param data
 	 *            source of JSON. It'll serialize by jackson.
-	 * @return
+	 * @return request object
 	 * @throws URISyntaxException
 	 * @throws JsonProcessingException
 	 */
@@ -127,8 +128,8 @@ public class Mech2WithBase {
 	/**
 	 * Create multi-part POST request(Charset is UTF-8).
 	 * 
-	 * @param path
-	 * @return
+	 * @param path path to request
+	 * @return request object
 	 */
 	public Mech2RequestMultipart postMultipart(String path) {
 		return this.postMultipart(path, StandardCharsets.UTF_8);
@@ -137,9 +138,9 @@ public class Mech2WithBase {
 	/**
 	 * Create new multi-part POST request.
 	 * 
-	 * @param path
-	 * @param charset
-	 * @return
+	 * @param path path to request
+	 * @param charset charset
+	 * @return request object
 	 */
 	public Mech2RequestMultipart postMultipart(String path, Charset charset) {
 		URIBuilder uriBuilder = new URIBuilder(this.baseURI)

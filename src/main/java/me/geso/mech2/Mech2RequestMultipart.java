@@ -20,10 +20,10 @@ public class Mech2RequestMultipart extends Mech2Request {
 	/**
 	 * Do not use this directly.
 	 * 
-	 * @param mech2
-	 * @param uriBuilder
-	 * @param request
-	 * @param charset
+	 * @param mech2 mech2 object
+	 * @param uriBuilder uri builder
+	 * @param request request object
+	 * @param charset character set
 	 */
 	public Mech2RequestMultipart(Mech2 mech2, URIBuilder uriBuilder, HttpRequestBase request, Charset charset) {
 		super(mech2, uriBuilder, request);
@@ -34,9 +34,9 @@ public class Mech2RequestMultipart extends Mech2Request {
 	/**
 	 * Add binary body from byte array.
 	 * 
-	 * @param name
-	 * @param file
-	 * @return
+	 * @param name parameter name
+	 * @param file parameter value
+	 * @return fluent
 	 */
 	public Mech2RequestMultipart addBinaryBody(String name, byte[] file) {
 		this.builder.addBinaryBody(name, file);
@@ -46,9 +46,9 @@ public class Mech2RequestMultipart extends Mech2Request {
 	/**
 	 * Add binary body from the file.
 	 * 
-	 * @param name
-	 * @param file
-	 * @return
+	 * @param name parameter name
+	 * @param file file object
+	 * @return fluent
 	 */
 	public Mech2RequestMultipart addBinaryBody(String name, File file) {
 		this.builder.addBinaryBody(name, file);
@@ -58,11 +58,11 @@ public class Mech2RequestMultipart extends Mech2Request {
 	/**
 	 * Add binary body from the file using specific content-type.
 	 * 
-	 * @param name
-	 * @param file
-	 * @param contentType
-	 * @param filename
-	 * @return
+	 * @param name parameter ame
+	 * @param file file object
+	 * @param contentType content-type
+	 * @param filename file name
+	 * @return fluent.
 	 */
 	public Mech2RequestMultipart addBinaryBody(String name, File file,
 			ContentType contentType, String filename) {
@@ -73,9 +73,9 @@ public class Mech2RequestMultipart extends Mech2Request {
 	/**
 	 * Add text body
 	 *
-	 * @param name
-	 * @param text
-	 * @return
+	 * @param name parameter name
+	 * @param text value
+	 * @return fluent.
 	 */
 	public Mech2RequestMultipart addTextBody(String name, String text) {
 		this.builder.addTextBody(name, text, ContentType.create("text/plain", charset));

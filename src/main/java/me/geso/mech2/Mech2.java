@@ -16,11 +16,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -36,7 +34,7 @@ import lombok.experimental.Accessors;
  * </pre>
  */
 public class Mech2 {
-	private static Logger logger = LoggerFactory.getLogger(Mech2.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Mech2.class);
 
 	private final HttpClientBuilder httpClientBuilder;
 	private final ObjectMapper objectMapper;
@@ -49,7 +47,7 @@ public class Mech2 {
 	/**
 	 * Get the builder object.
 	 *
-	 * @return
+	 * @return Builder object
 	 */
 	public static Builder builder() {
 		return new Builder();
@@ -58,8 +56,8 @@ public class Mech2 {
 	/**
 	 * Create new GET request object.
 	 *
-	 * @param uri
-	 * @return
+	 * @param uri URI to request
+	 * @return Request object
 	 */
 	public Mech2Request get(URI uri) {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpGet());
@@ -68,29 +66,28 @@ public class Mech2 {
 	/**
 	 * Create new POST request object.
 	 *
-	 * @param uri
-	 * @return
-	 * @throws JsonProcessingException
+	 * @param uri URI to request
+	 * @return request object
 	 */
-	public Mech2Request post(URI uri) throws JsonProcessingException {
+	public Mech2Request post(URI uri) {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpPost());
 	}
 
 	/**
 	 * Create new PUT request object.
 	 *
-	 * @param uri
-	 * @return
+	 * @param uri URI to request
+	 * @return request object
 	 */
-	public Mech2Request put(URI uri) throws JsonProcessingException {
+	public Mech2Request put(URI uri) {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpPut());
 	}
 
 	/**
 	 * Create new DELETE request object.
 	 *
-	 * @param uri
-	 * @return
+	 * @param uri URI object
+	 * @return created request object.
 	 */
 	public Mech2Request delete(URI uri) {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpDelete());
@@ -99,8 +96,8 @@ public class Mech2 {
 	/**
 	 * Create new HEAD request object.
 	 *
-	 * @param uri
-	 * @return
+	 * @param uri uri
+	 * @return created request object.
 	 */
 	public Mech2Request head(URI uri) {
 		return new Mech2Request(this, new URIBuilder(uri), new HttpHead());
@@ -109,7 +106,7 @@ public class Mech2 {
 	/**
 	 * Disable redirect handling.
 	 *
-	 * @return
+	 * @return Fluent
 	 */
 	public Mech2 disableRedirectHandling() {
 		this.httpClientBuilder.disableRedirectHandling();
@@ -119,15 +116,15 @@ public class Mech2 {
 	/**
 	 * Send HTTP request by HttpUriRequest.
 	 *
-	 * @param request
-	 * @return
+	 * @param request instance of HttpUriRequest
+	 * @return result object.
 	 * @throws IOException
 	 */
-	public <T> Mech2Result request(HttpUriRequest request) throws IOException {
+	public Mech2Result request(HttpUriRequest request) throws IOException {
 		long startedOn = System.currentTimeMillis();
 		try (CloseableHttpClient client = this.httpClientBuilder.build()) {
 			try (CloseableHttpResponse resp = client.execute(request)) {
-				logger.info("{}: {}, {} secs", request.getURI(),
+				LOGGER.info("{}: {}, {} secs", request.getURI(),
 					resp.getStatusLine().toString(),
 					(System.currentTimeMillis() - startedOn) / 1000.0);
 				return new Mech2Result(request, resp, this);
@@ -139,7 +136,7 @@ public class Mech2 {
 	 * Get the current HttpClientBuilder object.<br>
 	 * You can set parameter for this object.
 	 *
-	 * @return
+	 * @return HttpClientBuilder object.
 	 */
 	public HttpClientBuilder getHttpClientBuilder() {
 		return this.httpClientBuilder;
@@ -149,7 +146,7 @@ public class Mech2 {
 	 * Get the jackson's ObjectMapper object.<br>
 	 * You can configure the parameters.
 	 *
-	 * @return
+	 * @return Jackson's ObjectMapper object
 	 */
 	public ObjectMapper getObjectMapper() {
 		return this.objectMapper;
@@ -157,16 +154,22 @@ public class Mech2 {
 
 	@Accessors(fluent = true)
 	public static class Builder {
-		@Setter
-		private HttpClientBuilder httpClientBuilder = HttpClientBuilder
-			.create();
-		@Setter
+		private HttpClientBuilder httpClientBuilder;
 		private ObjectMapper objectMapper;
 
 		private Builder() {
+			this.httpClientBuilder = HttpClientBuilder.create();
 			this.objectMapper = new ObjectMapper();
 			this.objectMapper.configure(
 				DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		}
+
+		public void setObjectMapper(final ObjectMapper objectMapper) {
+			this.objectMapper = objectMapper;
+		}
+
+		public void setHttpClientBuilder(final HttpClientBuilder httpClientBuilder) {
+			this.httpClientBuilder = httpClientBuilder;
 		}
 
 		public Mech2 build() {

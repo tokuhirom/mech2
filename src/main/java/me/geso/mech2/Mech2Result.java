@@ -14,9 +14,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 /**
  * HTTP request result.<br>
@@ -53,7 +51,7 @@ public class Mech2Result {
 	/**
 	 * Get HttpRequest object.
 	 * 
-	 * @return
+	 * @return request
 	 */
 	public HttpRequest getRequest() {
 		return this.request;
@@ -62,7 +60,7 @@ public class Mech2Result {
 	/**
 	 * Get HttpResponse object.
 	 * 
-	 * @return
+	 * @return response
 	 */
 	public HttpResponse getResponse() {
 		return this.response;
@@ -71,7 +69,7 @@ public class Mech2Result {
 	/**
 	 * Returns true if the HttResponse has 2xx status code. False otherwise.
 	 * 
-	 * @return
+	 * @return true if response code is 2XX, false otherwise.
 	 */
 	public boolean isSuccess() {
 		int statusCode = this.response.getStatusLine().getStatusCode();
@@ -81,7 +79,7 @@ public class Mech2Result {
 	/**
 	 * Returns true if Content-Type of response is "application/json". Otherwise, returns false.
 	 * 
-	 * @return
+	 * @return true if the response's content-type is json-ish, false otherwise.
 	 */
 	public boolean isJSONResponse() {
 		Header contentTypeHeader = response.getFirstHeader("Content-Type");
@@ -97,8 +95,8 @@ public class Mech2Result {
 	 * Convert the result to Mech2JSONResult object. It contains this object and
 	 * JSON type information.
 	 * 
-	 * @param valueType
-	 * @return
+	 * @param valueType type of JSON value
+	 * @return result object with JSON type information.
 	 */
 	public <T> Mech2JSONResult<T> toJSONResult(Class<T> valueType) {
 		return Mech2JSONResult.of(this, valueType);
@@ -108,8 +106,8 @@ public class Mech2Result {
 	 * Convert the result to Mech2JSONResult object. It contains this object and
 	 * JSON type information.
 	 * 
-	 * @param klass
-	 * @return
+	 * @param klass type of JSON value
+	 * @return result object with JSON type information
 	 */
 	public <T> Mech2JSONResult<T> toJSONResult(TypeReference<T> klass) {
 		return Mech2JSONResult.of(this, klass);
@@ -118,14 +116,11 @@ public class Mech2Result {
 	/**
 	 * Parse JSON from content-body using jackson.
 	 * 
-	 * @param valueType
-	 * @return
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
+	 * @param valueType type of json value
+	 * @return parsed result
 	 * @throws IOException
 	 */
-	public <T> T parseJSON(TypeReference<T> valueType)
-			throws JsonParseException, JsonMappingException, IOException {
+	public <T> T parseJSON(TypeReference<T> valueType) throws IOException {
 		return this.mech2.getObjectMapper().readValue(
 			this.getResponse().getEntity().getContent(), valueType);
 	}
@@ -133,14 +128,11 @@ public class Mech2Result {
 	/**
 	 * Parse JSON from content-body using jackson.
 	 * 
-	 * @param valueType
-	 * @return
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
+	 * @param valueType type of json value
+	 * @return parsed result
 	 * @throws IOException
 	 */
-	public <T> T parseJSON(Class<T> valueType) throws JsonParseException,
-			JsonMappingException, IOException {
+	public <T> T parseJSON(Class<T> valueType) throws IOException {
 		return this.mech2.getObjectMapper().readValue(
 			this.getResponse().getEntity().getContent(), valueType);
 	}
@@ -161,7 +153,7 @@ public class Mech2Result {
 	/**
 	 * Get the HTTP response as String.
 	 * 
-	 * @return
+	 * @return string representation of content body
 	 * @throws ParseException
 	 * @throws IOException
 	 */
@@ -176,7 +168,7 @@ public class Mech2Result {
 	/**
 	 * Shorthand for {@code mech.getResponse().getStatusLine().getStatusCode()}
 	 * 
-	 * @return
+	 * @return status code.
 	 */
 	public int getStatusCode() {
 		return this.getResponse().getStatusLine().getStatusCode();
@@ -185,7 +177,7 @@ public class Mech2Result {
 	/**
 	 * Get ContentType object from the response.
 	 * 
-	 * @return
+	 * @return content type object.
 	 */
 	public ContentType getContentType() {
 		Header header = this.getResponse()

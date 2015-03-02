@@ -3,3 +3,10 @@
 /target/
 /.settings/
 /mech2.iml
+/.idea/*.xml
+/.idea/*/*.xml
+/.idea/.name
+!/.idea/checkstyle-idea.xml
+!/.idea/inspectionProfiles/Project_Default.xml
+!/.idea/inspectionProfiles/profiles_settings.xml
+!/.idea/dictionaries/*.xml

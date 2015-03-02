@@ -5,16 +5,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import org.junit.Test;
 
 public class Mech2ResultTest {
 
 	@Test
-	public void testStatusCode() throws IOException, URISyntaxException,
-			Exception {
+	public void testStatusCode() throws Exception {
 		JettyServletTester.runServlet((req, resp) -> {
 			resp.setContentType("text/html; charset=utf-8");
 			resp.getWriter().print("HOGE");
@@ -26,8 +22,7 @@ public class Mech2ResultTest {
 	}
 
 	@Test
-	public void testContentType() throws IOException, URISyntaxException,
-			Exception {
+	public void testContentType() throws Exception {
 		JettyServletTester.runServlet((req, resp) -> {
 			resp.setContentType("text/html; charset=utf-8");
 			resp.getWriter().print("HOGE");
@@ -41,7 +36,7 @@ public class Mech2ResultTest {
 	}
 
 	@Test
-	public void isJSONResponseShouldReturnTrueIfContentTypeIsJSON() throws IOException, URISyntaxException, Exception {
+	public void isJSONResponseShouldReturnTrueIfContentTypeIsJSON() throws Exception {
 		JettyServletTester.runServlet((req, resp) -> {
 			resp.setContentType("application/json; charset=utf-8");
 		}, (baseURL) -> {
@@ -52,7 +47,7 @@ public class Mech2ResultTest {
 	}
 
 	@Test
-	public void isJSONResponseShouldReturnTrueWithCaseInsensitive() throws IOException, URISyntaxException, Exception {
+	public void isJSONResponseShouldReturnTrueWithCaseInsensitive() throws Exception {
 		JettyServletTester.runServlet((req, resp) -> {
 			resp.setContentType("Application/Json; charset=utf-8");
 		}, (baseURL) -> {
@@ -63,7 +58,7 @@ public class Mech2ResultTest {
 	}
 
 	@Test
-	public void isJSONResponseShouldReturnFalseIfContentTypeIsntJSON() throws URISyntaxException, IOException,
+	public void isJSONResponseShouldReturnFalseIfContentTypeIsNotJSON() throws
 			Exception {
 		JettyServletTester.runServlet((req, resp) -> {
 			resp.setContentType("text/html; charset=utf-8");
@@ -75,7 +70,7 @@ public class Mech2ResultTest {
 	}
 
 	@Test
-	public void isJSONResponseShouldReturnFalseIfContentTypeIsNull() throws URISyntaxException, IOException, Exception {
+	public void isJSONResponseShouldReturnFalseIfContentTypeIsNull() throws Exception {
 		JettyServletTester.runServlet((req, resp) -> {
 			// Content-Type is empty
 		}, (baseURL) -> {

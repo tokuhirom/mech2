@@ -24,9 +24,9 @@ public class Mech2Request {
 	 * Normally, you shouldn't call this directly. Use
 	 * {@link Mech2#get(java.net.URI)}, etc instead.
 	 * 
-	 * @param mech2
-	 * @param uriBuilder
-	 * @param request
+	 * @param mech2 mech2 instance.
+	 * @param uriBuilder URI builder
+	 * @param request request object
 	 */
 	public Mech2Request(Mech2 mech2, URIBuilder uriBuilder, HttpRequestBase request) {
 		this.mech2 = mech2;
@@ -37,7 +37,7 @@ public class Mech2Request {
 	/**
 	 * Execute request.
 	 * 
-	 * @return
+	 * @return executed result
 	 * @throws URISyntaxException
 	 * @throws IOException
 	 */
@@ -54,9 +54,9 @@ public class Mech2Request {
 	/**
 	 * Add query parameter to the URI
 	 * 
-	 * @param param
-	 * @param value
-	 * @return
+	 * @param param parameter key
+	 * @param value parameter value
+	 * @return request object
 	 */
 	public Mech2Request addQueryParameter(String param, String value) {
 		this.uriBuilder.addParameter(param, value);
@@ -66,9 +66,9 @@ public class Mech2Request {
 	/**
 	 * Set query parameter to the URI
 	 * 
-	 * @param param
-	 * @param value
-	 * @return
+	 * @param param parameter name
+	 * @param value parameter value
+	 * @return request object
 	 */
 	public Mech2Request setQueryParameter(String param, String value) {
 		this.uriBuilder.setParameter(param, value);
@@ -78,9 +78,9 @@ public class Mech2Request {
 	/**
 	 * Add header to the request.
 	 * 
-	 * @param name
-	 * @param value
-	 * @return
+	 * @param name header name
+	 * @param value header value
+	 * @return fluent
 	 */
 	public Mech2Request addHeader(String name, String value) {
 		this.request.addHeader(name, value);
@@ -90,9 +90,9 @@ public class Mech2Request {
 	/**
 	 * Set header to the request.
 	 * 
-	 * @param name
-	 * @param value
-	 * @return
+	 * @param name header name
+	 * @param value header value
+	 * @return fluent
 	 */
 	public Mech2Request setHeader(String name, String value) {
 		this.request.setHeader(name, value);
@@ -102,8 +102,8 @@ public class Mech2Request {
 	/**
 	 * Set HttpEntity object to the request.
 	 * 
-	 * @param entity
-	 * @return
+	 * @param entity entity object
+	 * @return fluent
 	 */
 	public Mech2Request setBody(HttpEntity entity) {
 		if (this.request instanceof HttpEntityEnclosingRequest) {
@@ -119,8 +119,8 @@ public class Mech2Request {
 	 * Set JSON value as the entity body.<br>
 	 * This method uses jackson for serializing.
 	 *
-	 * @param form
-	 * @return
+	 * @param form json object. It will serialize by Jackson.
+	 * @return request object
 	 * @throws JsonProcessingException
 	 */
 	public Mech2Request setBodyJSON(Object form) throws JsonProcessingException {

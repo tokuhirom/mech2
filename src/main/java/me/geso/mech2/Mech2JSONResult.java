@@ -2,9 +2,7 @@ package me.geso.mech2;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import lombok.ToString;
 
@@ -24,41 +22,41 @@ public abstract class Mech2JSONResult<T> {
 	/**
 	 * Create new instance. But you shouldn't call this directly.
 	 *
-	 * @param result
-	 * @param klass
-	 * @return
+	 * @param result result object
+	 * @param klass Type reference.
+	 * @return new instance
 	 */
 	public static <T> Mech2JSONResult<T> of(Mech2Result result,
 			TypeReference<T> klass) {
-		return new Mech2JSONResultTypeReference<T>(result, klass);
+		return new Mech2JSONResultTypeReference<>(result, klass);
 	}
 
 	/**
 	 * Create new instance. But you shouldn't call this directly.
 	 *
-	 * @param result
-	 * @param klass
-	 * @return
+	 * @param result result object
+	 * @param klass destination type
+	 * @return  created object
 	 */
 	public static <T> Mech2JSONResult<T> of(Mech2Result result,
 			Class<T> klass) {
-		return new Mech2JSONResultClass<T>(result, klass);
+		return new Mech2JSONResultClass<>(result, klass);
 	}
 
 	/**
 	 * Get Mech2Result instance.
 	 *
-	 * @return
+	 * @return result object itself
 	 */
 	public Mech2Result getResult() {
 		return this.result;
 	}
 
 	/**
-	 * Throw exception if the response doens't contains 2XX.
+	 * Throw exception if the response doesn't contain 2XX.
 	 *
-	 * @return
-	 * @throws Mech2FailException
+	 * @return object itself.
+	 * @throws Mech2FailException if the status code isn't 2XX.
 	 */
 	public Mech2JSONResult<T> orDie() throws Mech2FailException {
 		if (this.result.isSuccess()) {
@@ -75,14 +73,10 @@ public abstract class Mech2JSONResult<T> {
 	/**
 	 * Parse JSON as object.
 	 *
-	 * @return
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
+	 * @return parsed object
 	 * @throws IOException
 	 */
-	abstract public T parseJSON() throws JsonParseException,
-			JsonMappingException,
-			IOException;
+	abstract public T parseJSON() throws IOException;
 
 	@ToString
 	public static class Mech2JSONResultClass<T> extends
@@ -97,7 +91,7 @@ public abstract class Mech2JSONResult<T> {
 		}
 
 		@Override
-		public T parseJSON() throws JsonParseException, JsonMappingException,
+		public T parseJSON() throws
 				IOException {
 			return this.getResult().parseJSON(this.klass);
 		}
@@ -108,18 +102,18 @@ public abstract class Mech2JSONResult<T> {
 	public static class Mech2JSONResultTypeReference<T> extends
 			Mech2JSONResult<T> {
 
-		private final TypeReference<T> typeref;
+		private final TypeReference<T> typeRef;
 
 		public Mech2JSONResultTypeReference(Mech2Result result,
-				TypeReference<T> typeref) {
+				TypeReference<T> typeRef) {
 			super(result);
-			this.typeref = typeref;
+			this.typeRef = typeRef;
 		}
 
 		@Override
-		public T parseJSON() throws JsonParseException, JsonMappingException,
+		public T parseJSON() throws
 				IOException {
-			return this.getResult().parseJSON(this.typeref);
+			return this.getResult().parseJSON(this.typeRef);
 		}
 	}
 
