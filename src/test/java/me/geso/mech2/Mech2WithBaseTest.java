@@ -69,6 +69,7 @@ public class Mech2WithBaseTest {
 				long count = 0;
 				while (itemIterator.hasNext()) {
 					count++;
+					itemIterator.next();
 				}
 				assertEquals(2L, count);
 				resp.getWriter().write("HAHAHA");
@@ -100,6 +101,7 @@ public class Mech2WithBaseTest {
 	}
 
 	public static class MultiPartServlet extends HttpServlet {
+		private static final long serialVersionUID = 1L;
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 				throws ServletException, IOException
 		{
