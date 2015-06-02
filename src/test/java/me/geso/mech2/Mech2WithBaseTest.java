@@ -40,6 +40,7 @@ public class Mech2WithBaseTest {
 			Mech2WithBase wb = new Mech2WithBase(mech2, baseURI);
 			assertThat(wb.get("/").execute().getResponse().getStatusLine().getStatusCode(), is(200));
 			assertThat(wb.get("/").execute().getResponseBodyAsString(), is("HAHAHA"));
+			assertThat(wb.get("/").execute().getResponseBodyAsByteArray(), is("HAHAHA".getBytes(StandardCharsets.UTF_8)));
 		});
 
 	}
