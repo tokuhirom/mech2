@@ -10,8 +10,11 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.Arrays;
 
 import lombok.Data;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
 
 public class Mech2Test {
 	@Test
@@ -127,6 +130,18 @@ public class Mech2Test {
 			Mech2 mech2 = Mech2.builder().build();
 			Mech2Result res = mech2.delete(baseURL).execute();
 			assertThat(res.getResponse().getStatusLine().getStatusCode(), is(200));
+		});
+	}
+
+	@Test
+	public void testBuilder() throws Exception {
+		JettyServletTester.runServlet((req, resp) -> {
+			assertThat(req.getHeader("X-HOGE"), is("FUGA"));
+			resp.getWriter().print("HOGE");
+		}, (baseURL) -> {
+			HttpClientBuilder ahcBuilder = HttpClientBuilder.create().setDefaultHeaders(Arrays.asList(new BasicHeader("X-HOGE", "FUGA")));
+			Mech2 mech2 = Mech2.builder().setHttpClientBuilder(ahcBuilder).build();
+			Mech2Result res = mech2.get(baseURL).execute();
 		});
 	}
 

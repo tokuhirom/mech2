@@ -164,12 +164,14 @@ public class Mech2 {
 				DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		}
 
-		public void setObjectMapper(final ObjectMapper objectMapper) {
+		public Builder setObjectMapper(final ObjectMapper objectMapper) {
 			this.objectMapper = objectMapper;
+			return this;
 		}
 
-		public void setHttpClientBuilder(final HttpClientBuilder httpClientBuilder) {
+		public Builder setHttpClientBuilder(final HttpClientBuilder httpClientBuilder) {
 			this.httpClientBuilder = httpClientBuilder;
+			return this;
 		}
 
 		public Mech2 build() {
