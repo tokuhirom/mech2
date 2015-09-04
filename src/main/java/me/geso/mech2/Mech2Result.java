@@ -167,6 +167,16 @@ public class Mech2Result {
 	}
 
 	/**
+	 * Get the HTTP response as byte array.
+	 *
+	 * @return response body as byte array
+	 * @throws IOException
+	 */
+	public byte[] getResponseBodyAsByteArray() throws IOException {
+		return EntityUtils.toByteArray(this.response.getEntity());
+	}
+
+	/**
 	 * Shorthand for {@code mech.getResponse().getStatusLine().getStatusCode()}
 	 * 
 	 * @return status code.

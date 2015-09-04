@@ -40,6 +40,7 @@ public class Mech2WithBaseTest {
 			Mech2WithBase wb = new Mech2WithBase(mech2, baseURI);
 			assertThat(wb.get("/").execute().getResponse().getStatusLine().getStatusCode(), is(200));
 			assertThat(wb.get("/").execute().getResponseBodyAsString(), is("HAHAHA"));
+			assertThat(wb.get("/").execute().getResponseBodyAsByteArray(), is("HAHAHA".getBytes(StandardCharsets.UTF_8)));
 		});
 
 	}
@@ -69,6 +70,7 @@ public class Mech2WithBaseTest {
 				long count = 0;
 				while (itemIterator.hasNext()) {
 					count++;
+					itemIterator.next();
 				}
 				assertEquals(2L, count);
 				resp.getWriter().write("HAHAHA");
@@ -100,6 +102,7 @@ public class Mech2WithBaseTest {
 	}
 
 	public static class MultiPartServlet extends HttpServlet {
+		private static final long serialVersionUID = 1L;
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 				throws ServletException, IOException
 		{
