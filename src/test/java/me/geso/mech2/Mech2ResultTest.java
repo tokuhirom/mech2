@@ -1,9 +1,7 @@
 package me.geso.mech2;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -32,6 +30,21 @@ public class Mech2ResultTest {
 			assertThat(res.getContentType().getCharset().displayName(),
 				is("UTF-8"));
 			assertThat(res.getContentType().getMimeType(), is("text/html"));
+		});
+	}
+
+	@Test
+	public void testContentType2() throws Exception {
+		JettyServletTester.runServlet((req, resp) -> {
+			resp.setContentType("text/html; charset=utf-8");
+			resp.getWriter().print("まるちばいと");
+		}, (baseURL) -> {
+			Mech2 mech2 = Mech2.builder().build();
+			Mech2Result res = mech2.get(baseURL).execute();
+			assertThat(res.getContentType().getCharset().displayName(),
+				is("UTF-8"));
+			assertThat(res.getContentType().getMimeType(), is("text/html"));
+			assertThat(res.getResponseBodyAsString(), is("まるちばいと"));
 		});
 	}
 
