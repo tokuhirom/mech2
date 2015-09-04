@@ -3,13 +3,7 @@ package me.geso.mech2;
 import java.io.IOException;
 import java.net.URI;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -171,6 +165,11 @@ public class Mech2 {
 
 		public Builder setHttpClientBuilder(final HttpClientBuilder httpClientBuilder) {
 			this.httpClientBuilder = httpClientBuilder;
+			return this;
+		}
+
+		public Builder setUserAgent(String userAgent) {
+			this.httpClientBuilder.setUserAgent(userAgent);
 			return this;
 		}
 

@@ -5,16 +5,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.Arrays;
 
 import lombok.Data;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicHeader;
 
 public class Mech2Test {
 	@Test
@@ -26,6 +26,21 @@ public class Mech2Test {
 			Mech2Result res = mech2.get(baseURL).execute();
 			assertThat(res.getResponse().getStatusLine().getStatusCode(), is(200));
 			assertThat(EntityUtils.toString(res.getResponse().getEntity(), StandardCharsets.UTF_8), is("HOGE"));
+		});
+	}
+
+	@Test
+	public void testBuilderSetUserAgentGet() throws Exception {
+		JettyServletTester.runServlet((req, resp) -> {
+			resp.getWriter().print(req.getHeader("user-agent"));
+		}, (baseURL) -> {
+			Mech2 mech2 = Mech2.builder()
+				.setUserAgent(
+						"mattn"
+				).build();
+			Mech2Result res = mech2.get(baseURL).execute();
+			assertThat(res.getResponse().getStatusLine().getStatusCode(), is(200));
+			assertThat(res.getResponseBodyAsString(), is("mattn"));
 		});
 	}
 
