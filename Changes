@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.5.0
+
+    - added setUserAgent method.
+
     - pass content-type information to entity.
       this fixes Mech2Response#getResponseBodyAsString's charset issue.
 
