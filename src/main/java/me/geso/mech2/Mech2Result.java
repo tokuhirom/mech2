@@ -42,6 +42,7 @@ public class Mech2Result {
 		try {
 			byte[] body = EntityUtils.toByteArray(response.getEntity());
 			ByteArrayEntity entity = new ByteArrayEntity(body);
+			entity.setContentType(response.getFirstHeader("Content-Type"));
 			response.setEntity(entity);
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
