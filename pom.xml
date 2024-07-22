@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlet</artifactId>
-			<version>9.4.55.v20240627</version>
+			<version>11.0.22</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
